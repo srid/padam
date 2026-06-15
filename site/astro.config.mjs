@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 
-// Project Pages live at https://srid.github.io/padam/
+// Custom domain (padam.srid.ca) serves at the root, so no `base`.
 export default defineConfig({
-  site: "https://srid.github.io",
-  base: "/padam",
+  site: "https://padam.srid.ca",
 });
