@@ -1,0 +1,56 @@
+---
+interface Props { title?: string }
+const { title = "padam" } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="padam — prompt your agent to make videos." />
+    <style is:global>
+      :root {
+        --bg: #0b0e14; --panel: #161b22; --border: #30363d;
+        --fg: #e6edf3; --dim: #8b949e; --accent: #58a6ff; --green: #3fb950;
+        --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        --sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: radial-gradient(120% 90% at 50% 0%, #161b22 0%, var(--bg) 60%); color: var(--fg); font-family: var(--sans); line-height: 1.5; }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      header { display: flex; align-items: center; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--border); }
+      header img { height: 52px; width: auto; }
+      header .tag { color: var(--dim); font-family: var(--mono); font-size: 14px; }
+      main { max-width: 980px; margin: 0 auto; padding: 36px 24px 80px; }
+      h1 { font-size: 40px; margin: 8px 0 24px; }
+      h2 { font-size: 22px; color: var(--dim); margin: 36px 0 12px; font-weight: 600; }
+      code { font-family: var(--mono); background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1px 7px; font-size: 0.9em; color: var(--accent); }
+      footer { color: var(--dim); font-family: var(--mono); font-size: 13px; text-align: center; padding: 30px; border-top: 1px solid var(--border); }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+      .card { display: block; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color .15s, transform .15s; }
+      .card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+      .card video { width: 100%; display: block; background: #000; aspect-ratio: 16/9; object-fit: contain; }
+      .card .meta { padding: 14px 16px; }
+      .card .meta strong { display: block; color: var(--fg); }
+      .card .meta span { color: var(--dim); font-family: var(--mono); font-size: 13px; }
+      video.player { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: #000; }
+      ol.scenes { padding-left: 22px; }
+      ol.scenes li { margin: 6px 0; color: var(--dim); }
+      ol.scenes li code { color: var(--green); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href={base}><img src={`${base}padam-logo.png`} alt="padam" /></a>
+      <span class="tag">prompt your agent to make videos</span>
+    </header>
+    <main><slot /></main>
+    <footer>
+      <a href="https://github.com/srid/padam">github.com/srid/padam</a> · AGPL-3.0 · built with Astro + Remotion
+    </footer>
+  </body>
+</html>

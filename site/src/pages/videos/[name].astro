@@ -1,0 +1,39 @@
+---
+import Base from "../../layouts/Base.astro";
+import videos from "../../data/videos.json";
+
+export function getStaticPaths() {
+  return videos.map((v) => ({ params: { name: v.name }, props: { v } }));
+}
+
+const { v } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const secs = (v.durationFrames / v.fps).toFixed(1);
+const mb = (v.sizeBytes / 1e6).toFixed(1);
+---
+
+<Base title={`${v.title} — padam`}>
+  <p><a href={base}>← all videos</a></p>
+  <h1>{v.title}</h1>
+  <video
+    class="player"
+    controls
+    playsinline
+    preload="metadata"
+    style={`aspect-ratio:${v.width}/${v.height}`}
+    src={`${base}videos/${v.name}.mp4`}></video>
+  <p style="color:var(--dim);font-family:var(--mono);font-size:14px">
+    {v.width}×{v.height} · {v.fps}fps · {secs}s · {mb} MB · {v.scenes.length} scenes
+  </p>
+
+  <h2>Scenes</h2>
+  <ol class="scenes">
+    {v.scenes.map((s) => (
+      <li><code>{s.kind}</code> {s.caption}</li>
+    ))}
+  </ol>
+
+  <p style="margin-top:28px">
+    <a href={`https://github.com/srid/padam/blob/main/videos/${v.name}/storyboard.json`}>storyboard.json ↗</a>
+  </p>
+</Base>
