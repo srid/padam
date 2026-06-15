@@ -1,0 +1,17 @@
+node_modules/
+
+# Rendered output and build caches — heavy/binary, never committed.
+# (session.json / storyboard.json ARE tracked: plain, inspectable, git-friendly.)
+*.mp4
+artifacts/audio/
+artifacts/storyboard.raw.json
+artifacts/direct-prompt.md
+public/fonts/*.ttf
+.remotion/
+remotion-bundle/
+*.log
+
+# Nix
+result
+result-*
+.direnv/

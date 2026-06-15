@@ -1,0 +1,54 @@
+{
+  "title": "ci → justci: A Live Project Rename",
+  "summary": "In 46 minutes, an agent takes a single rename request — 'ci' to 'justci' — and methodically updates 59 files: the Cabal package, Nix flake, Haskell modules, docs, and shell paths, while preserving the GitHub status prefix at the user's request. The session ends with all 14 CI nodes green and PR #25 open.",
+  "fps": 30,
+  "width": 1080,
+  "height": 1080,
+  "scenes": [
+    {
+      "id": "s1",
+      "kind": "intro",
+      "durationInFrames": 100,
+      "caption": "One rename. 59 files. Zero breakage.",
+      "narration": "Watch an agent systematically rename an entire Haskell CI tool — from source to Nix flake to docs — in under an hour."
+    },
+    {
+      "id": "s2",
+      "kind": "prompt",
+      "durationInFrames": 120,
+      "caption": "“Rename this project from 'ci' to 'justci', then open PR. Make sure to update all docs, skills, etc.”",
+      "narration": "The developer types one instruction and hands control to the agent.",
+      "eventRefs": [
+        "33bd99d5-e2aa-4df1-8f89-b4619f0beb29"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "diff",
+      "durationInFrames": 150,
+      "caption": "name: ci → name: justci — starting at the root",
+      "narration": "The agent begins at the Cabal file, renaming the package itself before rippling the change through every module.",
+      "eventRefs": [
+        "toolu_01SNzH3VqtZF2BxJhRt89DrL"
+      ]
+    },
+    {
+      "id": "s4",
+      "kind": "agent_work",
+      "durationInFrames": 110,
+      "caption": "82 tests pass. 14 CI nodes green.",
+      "narration": "After touching every corner of the codebase, the build stays clean and all remote runners come back green.",
+      "eventRefs": [
+        "toolu_0186GZCHgr9qtaYs2QcHJvQi",
+        "toolu_01H9fy9fNrZqCuQkAwsGP284"
+      ]
+    },
+    {
+      "id": "s5",
+      "kind": "outro",
+      "durationInFrames": 100,
+      "caption": "Shipped: PR #25 — justci/justci",
+      "narration": "Forty-six minutes after the ask, the pull request is open and every reference has been updated."
+    }
+  ]
+}
