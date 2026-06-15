@@ -12,8 +12,9 @@ storyboard is the source of truth — never hand-edit the MP4.
 ## The loop
 
 1. **Scaffold (once per repo).** If `src/render.ts` + `package.json` aren't present,
-   set padam up: `npm install` (deps: remotion, react, shiki, zod, tsx). On NixOS use
-   `nix develop` so Chromium/ffmpeg/fonts resolve (see `reference/nixos.md`).
+   set padam up: `nix develop` then `pnpm install` (deps: remotion, react, shiki, zod,
+   tsx). The flake is zero-inputs (npins-pinned nixpkgs) and provides Chromium/ffmpeg/
+   fonts; `nix build` produces reproducible node_modules. See `reference/nixos.md`.
 2. **Author.** Create `videos/<name>/storyboard.json` from the user's intent. One
    scene = `{ id, kind, durationInFrames, …fields }`. Pace at the storyboard's `fps`
    (30 default): title/outro ~90–120, prompt/bullets ~120–150, code/diff ~150.

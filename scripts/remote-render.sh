@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Render a video on a pre-created pu box — NEVER locally. Rendering (headless
 # Chromium + encode) is expensive and NixOS-fiddly; we offload it to a pu box
-# (default: `padam`). Access is via `pu connect <box>`. Syncs the source + the one
-# video folder, renders there, copies the MP4 back to videos/<name>/out.mp4.
+# (default: `padam`), reached via `pu connect <box>`. Syncs the source + the one
+# video folder, renders inside the box's `nix develop`, copies the MP4 back.
 #
 #   scripts/remote-render.sh <video-name> [pu-box]
 set -euo pipefail
@@ -22,15 +22,17 @@ if ! pu_sh true >/dev/null 2>&1; then
 fi
 
 echo "[padam] rendering '$NAME' on pu box '$HOST'…"
-pu_sh "mkdir -p ~/$REMOTE_DIR"
+pu_sh "rm -rf ~/$REMOTE_DIR && mkdir -p ~/$REMOTE_DIR"
+# Ship the zero-inputs flake (flake.nix + nix/ + npins/ + default.nix + shell.nix),
+# the lockfile, sources, and the one video folder. node_modules/fonts/out.mp4 excluded.
 tar czf - --exclude='node_modules' --exclude='.git' \
   --exclude='videos/*/fonts' --exclude='videos/*/out.mp4' \
-  package.json tsconfig.json flake.nix src scripts "videos/$NAME" \
-  $([ -f pnpm-lock.yaml ] && echo pnpm-lock.yaml) \
-  $([ -f package-lock.json ] && echo package-lock.json) \
+  package.json pnpm-lock.yaml .npmrc tsconfig.json \
+  flake.nix default.nix shell.nix nix npins \
+  src scripts "videos/$NAME" \
   | pu_sh "tar xzf - -C ~/$REMOTE_DIR"
 
-pu_sh "cd ~/$REMOTE_DIR && nix shell nixpkgs#nodejs_22 nixpkgs#chromium --command bash scripts/remote-build.sh '$NAME'"
+pu_sh "cd ~/$REMOTE_DIR && nix develop --accept-flake-config -c bash scripts/remote-build.sh '$NAME'"
 
 pu_sh "cat ~/$REMOTE_DIR/videos/$NAME/out.mp4" > "videos/$NAME/out.mp4"
 echo "[padam] ✓ videos/$NAME/out.mp4 ($(wc -c < "videos/$NAME/out.mp4") bytes)"

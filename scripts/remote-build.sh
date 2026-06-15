@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
-# Runs ON the pu box, inside `nix shell nixpkgs#nodejs_22 nixpkgs#chromium`.
-# Installs deps, makes Remotion's prebuilt glibc compositor runnable on NixOS
-# (loader shim — works even without nix-ld; see skills/video/reference/nixos.md),
-# then renders the given video.
+# Runs ON the pu box INSIDE `nix develop` — node, pnpm, chromium, $CHROMIUM_PATH and
+# $FONT_* all come from the devShell (shell.nix + nix/env.nix). Installs deps with
+# pnpm, loader-shims the prebuilt Remotion compositor for NixOS (no nix-ld needed),
+# then renders.
 #
-#   bash scripts/remote-build.sh <video-name>
+#   nix develop -c bash scripts/remote-build.sh <video-name>
 set -euo pipefail
 NAME="${1:?usage: remote-build.sh <video-name>}"
 
-npm install --no-audit --no-fund --loglevel=error
+echo "node $(node --version) · pnpm $(pnpm --version) on $(hostname) ($(nproc) cores)"
+pnpm install --frozen-lockfile
 
+# The prebuilt glibc compositor can't exec on NixOS (no /lib64/ld-linux). Wrap it to
+# launch through the Nix loader — works without nix-ld; avoids patchelf PT_NOTE issues.
 GLIBC=$(nix build --no-link --print-out-paths nixpkgs#glibc.out)
 GCC=$(nix build --no-link --print-out-paths "nixpkgs#stdenv.cc.cc.lib" 2>/dev/null \
       || nix build --no-link --print-out-paths nixpkgs#gcc-unwrapped.lib)
@@ -26,11 +29,5 @@ if [ -d "$COMP" ] && [ ! -e "$COMP/remotion.real" ]; then
   done
   echo "wrapped compositor via $GLIBC/lib/ld-linux-x86-64.so.2"
 fi
-
-DJVU=$(nix build --no-link --print-out-paths nixpkgs#dejavu_fonts)
-export FONT_MONO="$DJVU/share/fonts/truetype/DejaVuSansMono.ttf"
-export FONT_SANS="$DJVU/share/fonts/truetype/DejaVuSans.ttf"
-export CHROMIUM_PATH="$(command -v chromium)"
-echo "chromium: $CHROMIUM_PATH"
 
 npx tsx src/render.ts "videos/$NAME"

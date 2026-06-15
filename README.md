@@ -7,6 +7,8 @@
 **Prompt your agent to make videos.**
 *`padam` (படம்) — Tamil for “movie / film / picture.”*
 
+<img src="./assets/padam-logo.png" alt="padam" width="200" />
+
 </div>
 
 A video is a **`storyboard.json`** — an ordered list of scenes you (or your coding
@@ -28,7 +30,8 @@ release clips, social shorts, quote cards.
 ## Quick start
 
 ```bash
-npm install
+nix develop          # node + pnpm + Nix-pinned chromium + ffmpeg + fonts (zero flake inputs, via npins)
+pnpm install
 just render tutorial # renders on the pu box `padam` (never local), copies the MP4 back
 just open tutorial
 
@@ -141,8 +144,9 @@ compositor is wrapped to launch through the Nix loader
 src/            the engine — schema · model · highlight · scenes · Video · Root · render
 videos/<name>/  one folder per video: storyboard.json (+ assets, + out.mp4)
 skills/video/   the APM-published skill: SKILL.md + reference docs
-assets/         the marquee logo
-flake.nix · justfile · apm.yml
+assets/         logos (padam-marquee.svg · padam-logo.png)
+nix/ npins/     zero-inputs flake plumbing (nix-for-dev): nixpkgs pin, env, overlay
+flake.nix · default.nix · shell.nix · justfile · apm.yml · .npmrc (pnpm)
 ```
 
 ## License

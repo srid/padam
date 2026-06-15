@@ -30,5 +30,6 @@ new NAME:
 open NAME="tutorial":
     xdg-open "videos/{{NAME}}/out.mp4"
 
+# Typecheck (uses the devshell's node/pnpm)
 typecheck:
-    npm run typecheck
+    {{nix_shell}} pnpm run typecheck
