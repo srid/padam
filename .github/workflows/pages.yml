@@ -6,7 +6,8 @@ name: Pages
 on:
   push:
     branches: [main]
-    paths: ["site/**", "videos/**", "nix/**", "flake.nix", "assets/padam-logo.png", ".github/workflows/pages.yml"]
+  pull_request:
+    paths: ["site/**", "videos/**", "nix/**", "npins/**", "flake.nix", "default.nix", "assets/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
