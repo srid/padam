@@ -5,12 +5,19 @@
   "height": 1080,
   "scenes": [
     {
+      "id": "banner",
+      "kind": "image",
+      "durationInFrames": 80,
+      "src": "banner.png",
+      "caption": "padam — Tamil for \"movie\". Now showing:"
+    },
+    {
       "id": "intro",
       "kind": "title",
-      "durationInFrames": 100,
+      "durationInFrames": 90,
       "eyebrow": "a 60-second tutorial",
-      "heading": "padam",
-      "sub": "make videos by prompting your agent"
+      "heading": "lights, camera, prompt",
+      "sub": "make videos by talking to your agent"
     },
     {
       "id": "what",
@@ -22,48 +29,60 @@
         "You describe the cut in plain JSON; your agent edits it",
         "padam renders a deterministic MP4 (Remotion + Nix)"
       ],
-      "caption": "This very video is a padam. Dogfooded."
+      "caption": "This very video is a padam. Yes, we dogfood."
     },
     {
-      "id": "claude",
+      "id": "ask",
       "kind": "custom",
       "component": "ClaudePrompt",
       "durationInFrames": 175,
       "props": {
         "cwd": "~/code/site",
         "prompt": "make a 30-second launch clip — dark, square for LinkedIn",
-        "response": "● writing videos/launch/storyboard.json …"
+        "response": "● writing videos/demo/storyboard.json …"
       },
-      "caption": "You prompt your agent; it writes the storyboard."
+      "caption": "1 · Ask — you prompt; the agent writes the storyboard."
     },
     {
-      "id": "step1",
+      "id": "result",
       "kind": "code",
-      "durationInFrames": 165,
+      "durationInFrames": 150,
       "file": "videos/demo/storyboard.json",
       "lang": "json",
-      "code": "{\n  \"title\": \"my first video\",\n  \"width\": 1920, \"height\": 1080, \"fps\": 30,\n  \"scenes\": [\n    { \"kind\": \"title\", \"durationInFrames\": 90,\n      \"heading\": \"Hello!\" },\n    { \"kind\": \"outro\", \"durationInFrames\": 90,\n      \"heading\": \"Bye\", \"chips\": [\"made with padam\"] }\n  ]\n}",
-      "caption": "1 · Write a storyboard — each scene is a kind + a few fields."
+      "code": "{\n  \"title\": \"my first video\",\n  \"width\": 1080, \"height\": 1080, \"fps\": 30,\n  \"scenes\": [\n    { \"kind\": \"title\", \"durationInFrames\": 90,\n      \"heading\": \"Hello!\" },\n    { \"kind\": \"outro\", \"durationInFrames\": 90,\n      \"heading\": \"Bye\", \"chips\": [\"made with padam\"] }\n  ]\n}",
+      "caption": "Each scene is just a kind + a few fields."
     },
     {
       "id": "kinds",
       "kind": "stats",
-      "durationInFrames": 120,
-      "heading": "Scene kinds you can use",
+      "durationInFrames": 110,
+      "heading": "Scene kinds in the box",
       "chips": ["title", "bullets", "code", "diff", "terminal", "quote", "image", "stats", "outro", "custom"]
     },
     {
-      "id": "step2",
+      "id": "refine",
+      "kind": "custom",
+      "component": "ClaudePrompt",
+      "durationInFrames": 165,
+      "props": {
+        "cwd": "~/code/site",
+        "prompt": "make the title longer and add a subtitle",
+        "response": "● editing videos/demo/storyboard.json …"
+      },
+      "caption": "2 · Refine — just say what you want changed."
+    },
+    {
+      "id": "refine-diff",
       "kind": "diff",
-      "durationInFrames": 160,
-      "file": "storyboard.json",
+      "durationInFrames": 150,
+      "file": "videos/demo/storyboard.json",
       "lang": "json",
       "before": "{ \"kind\": \"title\",\n  \"durationInFrames\": 90,\n  \"heading\": \"Hello!\" }",
       "after": "{ \"kind\": \"title\",\n  \"durationInFrames\": 120,\n  \"heading\": \"Hello, world!\",\n  \"sub\": \"my first padam\" }",
-      "caption": "2 · Refine — “make the title longer, add a subtitle.”"
+      "caption": "… and the agent makes exactly that edit."
     },
     {
-      "id": "step3",
+      "id": "render",
       "kind": "terminal",
       "durationInFrames": 110,
       "command": "just render demo",
@@ -71,9 +90,16 @@
       "caption": "3 · Render — reproducible from the storyboard alone."
     },
     {
+      "id": "quote",
+      "kind": "quote",
+      "durationInFrames": 120,
+      "text": "The best video editor is the one you never have to open.",
+      "by": "every padam user, probably"
+    },
+    {
       "id": "customize",
       "kind": "bullets",
-      "durationInFrames": 150,
+      "durationInFrames": 140,
       "heading": "Make it yours",
       "items": [
         "Theme: override colors + fonts per storyboard",
