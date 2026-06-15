@@ -1,0 +1,28 @@
+---
+import Base from "../../layouts/Base.astro";
+import videos from "../../data/videos.json";
+const base = import.meta.env.BASE_URL;
+const secs = (v: { durationFrames: number; fps: number }) => (v.durationFrames / v.fps).toFixed(0);
+---
+
+<Base title="Now Showing — padam">
+  <p class="plaque">Now Showing</p>
+  <h1 style="margin-top:16px">The Gallery</h1>
+  <p class="lede">Videos made with padam — each one reproducible from its <code>storyboard.json</code>.</p>
+
+  {videos.length === 0 ? (
+    <p class="lede" style="margin-top:30px">No features yet. Add one under <code>videos/&lt;name&gt;/</code> and render it.</p>
+  ) : (
+    <div class="grid" style="margin-top:32px">
+      {videos.map((v) => (
+        <a class="card" href={`${base}videos/${v.name}/`}>
+          <video muted playsinline preload="metadata" src={`${base}videos/${v.name}.mp4#t=2`}></video>
+          <div class="meta">
+            <strong>{v.title}</strong>
+            <span>{v.name} · {v.width}×{v.height} · {secs(v)}s</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  )}
+</Base>

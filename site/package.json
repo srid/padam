@@ -1,0 +1,15 @@
+{
+  "name": "padam-site",
+  "private": true,
+  "type": "module",
+  "description": "padam gallery — a page per rendered video, deployed to GitHub Pages.",
+  "scripts": {
+    "collect": "node scripts/collect.mjs",
+    "dev": "node scripts/collect.mjs && astro dev",
+    "build": "node scripts/collect.mjs && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.13.0"
+  }
+}

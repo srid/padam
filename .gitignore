@@ -1,0 +1,17 @@
+node_modules/
+
+# Build caches. Rendered videos (videos/**/out.mp4) ARE committed — this repo is
+# its own video library (we dogfood the tool here). Storyboards + assets are source.
+.remotion/
+remotion-bundle/
+videos/**/fonts/
+*.log
+
+# Nix
+result
+result-*
+.direnv/
+
+
+# APM dependencies
+apm_modules/

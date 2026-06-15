@@ -1,0 +1,28 @@
+# APM package manifest — https://microsoft.github.io/apm/
+name: padam
+version: 0.1.0
+type: hybrid
+target: claude
+description: Prompt your agent to make videos — a Remotion video engine driven by a hand/agent-editable storyboard.json. Ships the `video` skill.
+
+# Allow-list of what ships to consumers. padam's agent face is the `video` skill.
+# Install it in any repo:
+#
+#   # apm.yml (consumer)
+#   dependencies:
+#     apm:
+#       - srid/padam
+#
+#   $ apm install   # → .apm/skills/video deployed to the consumer's agent(s)
+includes:
+  - .apm/skills/video/
+
+# Maintainer-only dev guidance — juspay/skills' Nix conventions, deployed into
+# padam's own .claude/ for development but EXCLUDED from what consumers receive
+# (and from `apm pack`).
+devDependencies:
+  apm:
+    - path: ./dev # padam's own dev instructions (git: append-only; render: pu-box only)
+    - juspay/skills/skills/nix-for-dev#fb49f6cf
+    - juspay/skills/skills/nix-justfile#fb49f6cf
+    - juspay/skills/skills/nix-typescript#fb49f6cf
