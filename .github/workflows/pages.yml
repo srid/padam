@@ -5,7 +5,7 @@ name: Pages
 # pu box). No Node/pnpm toolchain to set up: Nix builds it reproducibly.
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
     paths: ["site/**", "videos/**", "nix/**", "npins/**", "flake.nix", "default.nix", "assets/**", ".github/workflows/pages.yml"]
   workflow_dispatch:

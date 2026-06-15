@@ -7,6 +7,12 @@
 **Prompt your agent to make videos.**
 *`padam` (படம்) — Tamil for “movie / film / picture.”*
 
+<video src="https://padam.srid.ca/videos/tutorial.mp4" poster="https://padam.srid.ca/og.png" controls muted width="720">
+  <a href="https://padam.srid.ca/videos/tutorial/">▶ Watch the padam tutorial</a>
+</video>
+
+**[padam.srid.ca](https://padam.srid.ca)** · [browse the gallery](https://padam.srid.ca/videos/)
+
 </div>
 
 A video is a **`storyboard.json`** — an ordered list of scenes you (or your coding

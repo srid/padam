@@ -19,6 +19,7 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
       ../site/tsconfig.json
       ../site/scripts
       ../site/src
+      ../site/public # tracked statics: CNAME (custom domain) + favicon.svg
       ../videos
       ../assets/padam-logo.png
       ../assets/og.png
