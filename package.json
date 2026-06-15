@@ -1,0 +1,28 @@
+{
+  "name": "padam",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "padam — prompt your agent to make videos. A Remotion video engine driven by a hand/agent-editable storyboard.json.",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "render": "tsx src/render.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.366",
+    "@remotion/renderer": "4.0.366",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.366",
+    "shiki": "4.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "19.2.0",
+    "@types/react-dom": "19.2.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

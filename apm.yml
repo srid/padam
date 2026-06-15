@@ -1,0 +1,18 @@
+# APM package manifest — https://microsoft.github.io/apm/
+# padam publishes the `video` skill at skills/video/. Install it in any repo:
+#
+#   # apm.yml (consumer)
+#   dependencies:
+#     apm:
+#       - srid/padam/skills/video
+#
+#   $ apm install   # → skill deployed to the consumer's agent(s)
+#
+name: padam
+version: 0.1.0
+description: Prompt your agent to make videos — a Remotion video engine driven by a hand/agent-editable storyboard.json. Ships the `video` skill.
+
+# padam's own engine (src/) is a Remotion + Node project; render needs Chromium,
+# which it resolves through Nix ($CHROMIUM_PATH). See skills/video/reference/nixos.md.
+dependencies:
+  apm: []
