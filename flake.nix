@@ -19,7 +19,7 @@
         in
         {
           default = pkgs.mkShell {
-            packages = [ pkgs.nodejs_22 pkgs.ffmpeg fonts ]
+            packages = [ pkgs.nodejs_22 pkgs.ffmpeg pkgs.uv fonts ]
               ++ pkgs.lib.optionals isLinux [ chromium ];
             shellHook = ''
               ${pkgs.lib.optionalString isLinux ''export CHROMIUM_PATH="${chromium}/bin/chromium"''}

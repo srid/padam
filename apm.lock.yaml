@@ -1,0 +1,40 @@
+lockfile_version: '1'
+generated_at: '2026-06-15T22:37:40.261053+00:00'
+apm_version: 0.20.0
+dependencies:
+- repo_url: juspay/skills
+  host: github.com
+  resolved_commit: fb49f6cf0a98810fdff95ab0c7438f10eabf386d
+  virtual_path: skills/nix-for-dev
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/nix-for-dev
+  - .claude/skills/nix-for-dev/SKILL.md
+  deployed_file_hashes:
+    .claude/skills/nix-for-dev/SKILL.md: sha256:28267fd00f8961e5bbb960af1c9bce875ff03efb05d1dbeb56dc57b56614a169
+  content_hash: sha256:222bee6d02ef727eff965ae224683604c59d387c3e4ce47582543a8550b86bc4
+- repo_url: juspay/skills
+  host: github.com
+  resolved_commit: fb49f6cf0a98810fdff95ab0c7438f10eabf386d
+  virtual_path: skills/nix-justfile
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/nix-justfile
+  - .claude/skills/nix-justfile/SKILL.md
+  deployed_file_hashes:
+    .claude/skills/nix-justfile/SKILL.md: sha256:730345294a6536793ede474dc7f624faa83af6e97dbcbeb10fed1954a0d408fd
+  content_hash: sha256:8f48e067e59da48c3ac90b4e2228ebb4ecfd988375b40efe831339d9a493accd
+- repo_url: juspay/skills
+  host: github.com
+  resolved_commit: fb49f6cf0a98810fdff95ab0c7438f10eabf386d
+  virtual_path: skills/nix-typescript
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/nix-typescript
+  - .claude/skills/nix-typescript/SKILL.md
+  deployed_file_hashes:
+    .claude/skills/nix-typescript/SKILL.md: sha256:cd771d988edb89b88b233c7b799f3816c9982d669419d75fb409dd38103b1962
+  content_hash: sha256:67ff7ce606ad0378af382ad6cb84d9853bf70ec52d6fe40ed6b6f82ecd2c48c3

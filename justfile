@@ -4,8 +4,17 @@ set shell := ["bash", "-uc"]
 
 HOST := "padam"
 
+# `apm-cli` (PyPI) provides the `apm` command; run via uvx, entering the devshell
+# (which provides `uv`) only when not already inside it.
+nix_shell := if env('IN_NIX_SHELL', '') != '' { '' } else { 'nix develop --accept-flake-config -c' }
+apm_cmd := nix_shell + ' uvx --from apm-cli apm'
+
 default:
     @just --list
+
+# Install APM integrations for Claude Code only (.claude/, .agents/skills/)
+apm-install:
+    {{ apm_cmd }} install --target claude
 
 # Render a video on the pu box → videos/<name>/out.mp4 (never local)
 render NAME="tutorial" HOST=HOST:

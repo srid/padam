@@ -11,3 +11,7 @@ videos/**/fonts/
 result
 result-*
 .direnv/
+
+
+# APM dependencies
+apm_modules/

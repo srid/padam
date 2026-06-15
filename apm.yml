@@ -14,5 +14,12 @@ description: Prompt your agent to make videos — a Remotion video engine driven
 
 # padam's own engine (src/) is a Remotion + Node project; render needs Chromium,
 # which it resolves through Nix ($CHROMIUM_PATH). See skills/video/reference/nixos.md.
+#
+# We consume juspay/skills' Nix conventions (installed into .claude/ via
+# `just apm-install`): zero-inputs flake + npins, pnpm + fetchPnpmDeps, and justfile
+# recipe conventions.
 dependencies:
-  apm: []
+  apm:
+    - juspay/skills/skills/nix-for-dev#fb49f6cf
+    - juspay/skills/skills/nix-justfile#fb49f6cf
+    - juspay/skills/skills/nix-typescript#fb49f6cf
