@@ -18,9 +18,11 @@ mkdirSync(pubVideos, { recursive: true });
 mkdirSync(dataDir, { recursive: true });
 mkdirSync(join(siteRoot, "public"), { recursive: true });
 
-// logo for the header
+// logo for the header + the Open Graph / Twitter-card banner
 const logo = join(repoRoot, "assets", "padam-logo.png");
 if (existsSync(logo)) copyFileSync(logo, join(siteRoot, "public", "padam-logo.png"));
+const og = join(repoRoot, "assets", "og.png");
+if (existsSync(og)) copyFileSync(og, join(siteRoot, "public", "og.png"));
 
 const out = [];
 for (const name of existsSync(videosDir) ? readdirSync(videosDir) : []) {

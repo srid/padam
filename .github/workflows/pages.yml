@@ -1,11 +1,12 @@
 name: Pages
 
-# Build the Astro gallery (site/) and deploy to GitHub Pages. Embeds the committed
-# videos/<name>/out.mp4 — no rendering happens here (renders run on the pu box).
+# Build the Astro gallery with Nix (`nix build .#site`) and deploy to GitHub Pages.
+# Embeds the committed videos/<name>/out.mp4 — no rendering here (renders run on the
+# pu box). No Node/pnpm toolchain to set up: Nix builds it reproducibly.
 on:
   push:
     branches: [main]
-    paths: ["site/**", "videos/**", "assets/padam-logo.png", ".github/workflows/pages.yml"]
+    paths: ["site/**", "videos/**", "nix/**", "flake.nix", "assets/padam-logo.png", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -20,24 +21,23 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: nixbuild/nix-quick-install-action@v30
         with:
-          version: 10
-      - uses: actions/setup-node@v4
+          nix_conf: |
+            experimental-features = nix-command flakes
+      # Cache the nix store across runs (restores before build, GCs + saves after).
+      - uses: nix-community/cache-nix-action@v6
         with:
-          node-version: 22
-          cache: pnpm
-          cache-dependency-path: site/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.nix', 'default.nix', 'nix/**', 'npins/sources.json', 'site/pnpm-lock.yaml') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 5G
+      - run: nix build .#site --accept-flake-config
+      - run: cp -rL result _site # deref the store symlink for upload
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site/dist
+          path: _site
 
   deploy:
     needs: build

@@ -1,10 +1,22 @@
 lockfile_version: '1'
-generated_at: '2026-06-15T22:37:40.261053+00:00'
+generated_at: '2026-06-15T23:18:09.612828+00:00'
 apm_version: 0.20.0
 dependencies:
+- repo_url: _local/dev
+  package_type: apm_package
+  deployed_files:
+  - .claude/rules/git.md
+  - .claude/rules/rendering.md
+  deployed_file_hashes:
+    .claude/rules/git.md: sha256:e78c2178c349fa34e7eccd51557bbce7f704a54e85f8875abcdf7c414e2d146c
+    .claude/rules/rendering.md: sha256:5950600cad9199c40c23ae1d7036c7a8f04029c32e8d39576a8ac020f8444680
+  source: local
+  local_path: ./dev
+  is_dev: true
 - repo_url: juspay/skills
   host: github.com
   resolved_commit: fb49f6cf0a98810fdff95ab0c7438f10eabf386d
+  resolved_ref: fb49f6cf
   virtual_path: skills/nix-for-dev
   is_virtual: true
   package_type: claude_skill
@@ -17,6 +29,7 @@ dependencies:
 - repo_url: juspay/skills
   host: github.com
   resolved_commit: fb49f6cf0a98810fdff95ab0c7438f10eabf386d
+  resolved_ref: fb49f6cf
   virtual_path: skills/nix-justfile
   is_virtual: true
   package_type: claude_skill
@@ -29,6 +42,7 @@ dependencies:
 - repo_url: juspay/skills
   host: github.com
   resolved_commit: fb49f6cf0a98810fdff95ab0c7438f10eabf386d
+  resolved_ref: fb49f6cf
   virtual_path: skills/nix-typescript
   is_virtual: true
   package_type: claude_skill
@@ -38,3 +52,12 @@ dependencies:
   deployed_file_hashes:
     .claude/skills/nix-typescript/SKILL.md: sha256:cd771d988edb89b88b233c7b799f3816c9982d669419d75fb409dd38103b1962
   content_hash: sha256:67ff7ce606ad0378af382ad6cb84d9853bf70ec52d6fe40ed6b6f82ecd2c48c3
+local_deployed_files:
+- .claude/skills/video
+- .claude/skills/video/SKILL.md
+- .claude/skills/video/reference/nixos.md
+- .claude/skills/video/reference/scenes.md
+local_deployed_file_hashes:
+  .claude/skills/video/SKILL.md: sha256:62cad7101b2e09a9cd3b7c66be2aaefda320a6a11198e36406be498c1fb2eded
+  .claude/skills/video/reference/nixos.md: sha256:c2e01e5c4d0c44a5fc8382fb0144105d5066f44d04eda5986546ec09e676184c
+  .claude/skills/video/reference/scenes.md: sha256:550f46eee30d3c95a8f2ae28d0e2d734d7d3e4d0b456f3f0687837d9f9490b47

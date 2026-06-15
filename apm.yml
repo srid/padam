@@ -1,25 +1,28 @@
 # APM package manifest — https://microsoft.github.io/apm/
-# padam publishes the `video` skill at skills/video/. Install it in any repo:
+name: padam
+version: 0.1.0
+type: hybrid
+target: claude
+description: Prompt your agent to make videos — a Remotion video engine driven by a hand/agent-editable storyboard.json. Ships the `video` skill.
+
+# Allow-list of what ships to consumers. padam's agent face is the `video` skill.
+# Install it in any repo:
 #
 #   # apm.yml (consumer)
 #   dependencies:
 #     apm:
-#       - srid/padam/skills/video
+#       - srid/padam
 #
-#   $ apm install   # → skill deployed to the consumer's agent(s)
-#
-name: padam
-version: 0.1.0
-description: Prompt your agent to make videos — a Remotion video engine driven by a hand/agent-editable storyboard.json. Ships the `video` skill.
+#   $ apm install   # → .apm/skills/video deployed to the consumer's agent(s)
+includes:
+  - .apm/skills/video/
 
-# padam's own engine (src/) is a Remotion + Node project; render needs Chromium,
-# which it resolves through Nix ($CHROMIUM_PATH). See skills/video/reference/nixos.md.
-#
-# We consume juspay/skills' Nix conventions (installed into .claude/ via
-# `just apm-install`): zero-inputs flake + npins, pnpm + fetchPnpmDeps, and justfile
-# recipe conventions.
-dependencies:
+# Maintainer-only dev guidance — juspay/skills' Nix conventions, deployed into
+# padam's own .claude/ for development but EXCLUDED from what consumers receive
+# (and from `apm pack`).
+devDependencies:
   apm:
+    - path: ./dev # padam's own dev instructions (git: append-only; render: pu-box only)
     - juspay/skills/skills/nix-for-dev#fb49f6cf
     - juspay/skills/skills/nix-justfile#fb49f6cf
     - juspay/skills/skills/nix-typescript#fb49f6cf

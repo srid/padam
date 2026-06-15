@@ -50,7 +50,7 @@
     <text x="620" y="350" fill="#8b949e" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="20">[mp4]</text>
     <text x="720" y="350" fill="#58a6ff" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="20">storyboard.json</text>
     <text x="940" y="350" fill="#3fb950" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="20">→ render →</text>
-    <text x="1080" y="350" fill="#f5c451" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="22">🎬</text>
+    <text x="1080" y="350" fill="#f5c451" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="24">★</text>
   </g>
 
 </svg>

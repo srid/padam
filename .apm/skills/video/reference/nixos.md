@@ -51,4 +51,4 @@ need those glyphs on screen.
 
 For long/high-res renders, run on a beefier host over SSH: sync the repo (minus
 `node_modules`), `nix shell nixpkgs#nodejs_22 nixpkgs#chromium`, apply the wrapper
-above if the host lacks nix-ld, `npm install`, `render`, copy the MP4 back.
+above if the host lacks nix-ld, `pnpm install`, `render`, copy the MP4 back.

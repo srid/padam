@@ -12,7 +12,10 @@
         systems);
     in
     {
-      packages = eachSystem (pkgs: { default = import ./default.nix { inherit pkgs; }; });
+      packages = eachSystem (pkgs: {
+        default = import ./default.nix { inherit pkgs; };
+        site = import ./nix/site.nix { inherit pkgs; };
+      });
       devShells = eachSystem (pkgs: { default = import ./shell.nix { inherit pkgs; }; });
     };
 }

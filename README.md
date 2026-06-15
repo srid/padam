@@ -7,8 +7,6 @@
 **Prompt your agent to make videos.**
 *`padam` (படம்) — Tamil for “movie / film / picture.”*
 
-<img src="./assets/padam-logo.png" alt="padam" width="200" />
-
 </div>
 
 A video is a **`storyboard.json`** — an ordered list of scenes you (or your coding
@@ -74,7 +72,7 @@ just new my-clip     # scaffold videos/my-clip/storyboard.json, then edit + rend
 | `custom` | a bespoke `.tsx` scene (escape hatch) | `component`, `props` |
 
 Every scene also takes `durationInFrames`, optional `caption` (on-screen) and
-`narration` (for future TTS). Full reference: [`skills/video/reference/scenes.md`](./skills/video/reference/scenes.md).
+`narration` (for future TTS). Full reference: [`.apm/skills/video/reference/scenes.md`](./.apm/skills/video/reference/scenes.md).
 
 ## How you direct it
 
@@ -121,10 +119,12 @@ Two layers of reuse:
 ```yaml
 dependencies:
   apm:
-    - srid/padam/skills/video
+    - srid/padam
 ```
 
-Then prompt your agent to make a video in *that* repo. See [`skills/video/SKILL.md`](./skills/video/SKILL.md).
+Then prompt your agent to make a video in *that* repo — the `video` skill ships via
+the `includes:` allow-list (the Nix dev skills stay maintainer-only as
+`devDependencies`). See [`.apm/skills/video/SKILL.md`](./.apm/skills/video/SKILL.md).
 
 ## Rendering (on a pu box, never local)
 
@@ -135,18 +135,20 @@ Remotion so it never downloads a browser), and copies the MP4 back. The render b
 doesn't need [`nix-ld`](https://github.com/nix-community/nix-ld) — the prebuilt
 compositor is wrapped to launch through the Nix loader
 ([`scripts/remote-build.sh`](./scripts/remote-build.sh) ·
-[reference/nixos.md](./skills/video/reference/nixos.md)). Create the box once
+[reference/nixos.md](./.apm/skills/video/reference/nixos.md)). Create the box once
 (`pu create padam`-style); we deliberately never render locally.
 
 ## Layout
 
 ```
-src/            the engine — schema · model · highlight · scenes · Video · Root · render
-videos/<name>/  one folder per video: storyboard.json (+ assets, + out.mp4)
-skills/video/   the APM-published skill: SKILL.md + reference docs
-assets/         logos (padam-marquee.svg · padam-logo.png)
-nix/ npins/     zero-inputs flake plumbing (nix-for-dev): nixpkgs pin, env, overlay
-flake.nix · default.nix · shell.nix · justfile · apm.yml · .npmrc (pnpm)
+src/                the engine — schema · model · highlight · scenes · Video · Root · render
+videos/<name>/      one folder per video: storyboard.json (+ assets, + out.mp4)
+site/               Astro gallery → GitHub Pages (a page per video; `nix build .#site`)
+.apm/skills/video/  the APM skill that ships to consumers (via `includes:`)
+dev/                maintainer-only APM package — dev instructions (a devDependency)
+assets/             padam-marquee.svg · padam-logo.png · og.png (Open Graph banner)
+nix/ npins/         zero-inputs flake plumbing (nix-for-dev): nixpkgs pin, env, overlay
+flake.nix · default.nix · nix/site.nix · shell.nix · justfile · apm.yml · .npmrc
 ```
 
 ## License

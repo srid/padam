@@ -1,0 +1,9 @@
+# Maintainer-only APM package: padam's internal dev guidance. Wired into the root
+# apm.yml as a local-path devDependency, so `apm install` deploys these instructions
+# into padam's own .claude/ for padam developers, while consumers of srid/padam (and
+# `apm pack`) never receive them.
+name: padam-dev
+version: 0.1.0
+type: instructions
+target: claude
+includes: auto
