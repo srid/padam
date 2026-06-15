@@ -28,10 +28,10 @@
 
   <!-- marquee board -->
   <rect x="440" y="78" width="612" height="206" rx="14" fill="#0d1117" stroke="url(#gold)" stroke-width="4"/>
-  <text x="746" y="126" text-anchor="middle" fill="#f5c451" font-size="30" letter-spacing="2">படம்</text>
-  <text x="746" y="206" text-anchor="middle" fill="#e6edf3" font-size="92" font-weight="800" letter-spacing="2">PADAM</text>
+  <text x="746" y="128" text-anchor="middle" fill="#f5c451" font-size="24" letter-spacing="7" font-family="'DejaVu Sans Mono','Liberation Mono',monospace">NOW SHOWING</text>
+  <text x="746" y="210" text-anchor="middle" fill="#e6edf3" font-size="74" font-weight="800" letter-spacing="1">make videos</text>
   <rect x="540" y="232" width="412" height="34" rx="6" fill="#1c2230"/>
-  <text x="746" y="256" text-anchor="middle" fill="#3fb950" font-size="18" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" letter-spacing="3">NOW SHOWING: hello, world</text>
+  <text x="746" y="256" text-anchor="middle" fill="#3fb950" font-size="18" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" letter-spacing="2">prompt your agent · Remotion + Nix</text>
 
   <!-- film strip across the bottom, frames carry tech glyphs -->
   <g>
@@ -53,7 +53,4 @@
     <text x="1080" y="350" fill="#f5c451" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="22">🎬</text>
   </g>
 
-  <!-- cheeky tagline -->
-  <text x="1052" y="120" text-anchor="end" fill="#6e7681" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="17">prompt your agent.</text>
-  <text x="1052" y="146" text-anchor="end" fill="#6e7681" font-family="'DejaVu Sans Mono','Liberation Mono',monospace" font-size="17">get a படம்.</text>
 </svg>
