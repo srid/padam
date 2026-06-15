@@ -28,13 +28,16 @@ release clips, social shorts, quote cards.
 ## Quick start
 
 ```bash
-nix develop          # node + Nix-pinned chromium + ffmpeg + fonts
 npm install
-just render tutorial # → videos/tutorial/out.mp4
+just render tutorial # renders on the pu box `padam` (never local), copies the MP4 back
 just open tutorial
 
 just new my-clip     # scaffold videos/my-clip/storyboard.json, then edit + render
 ```
+
+> **Renders run on a pu box, never locally** — headless-Chromium rendering is expensive
+> and NixOS-fiddly. `just render <name>` offloads to the pre-created pu host `padam`
+> (override: `just render <name> <host>`). See [`.apm/instructions/rendering.md`](./.apm/instructions/rendering.md).
 
 …or just tell your agent: *“make a 30-second clip announcing v2, dark, square for LinkedIn.”*
 
@@ -120,13 +123,17 @@ dependencies:
 
 Then prompt your agent to make a video in *that* repo. See [`skills/video/SKILL.md`](./skills/video/SKILL.md).
 
-## Rendering anywhere
+## Rendering (on a pu box, never local)
 
-`render` passes `$CHROMIUM_PATH` to Remotion as `browserExecutable`, so it never
-downloads a browser. `nix develop` (or the launcher) resolves Chromium/ffmpeg/fonts
-through Nix. On machines without [`nix-ld`](https://github.com/nix-community/nix-ld),
-Remotion's prebuilt compositor needs the loader shim — see
-[`skills/video/reference/nixos.md`](./skills/video/reference/nixos.md).
+`just render <name>` runs [`scripts/remote-render.sh`](./scripts/remote-render.sh): it
+syncs the source + the one video folder to the pu host `padam`, renders there inside
+`nix shell` (Chromium/ffmpeg/fonts resolved through Nix, `$CHROMIUM_PATH` passed to
+Remotion so it never downloads a browser), and copies the MP4 back. The render box
+doesn't need [`nix-ld`](https://github.com/nix-community/nix-ld) — the prebuilt
+compositor is wrapped to launch through the Nix loader
+([`scripts/remote-build.sh`](./scripts/remote-build.sh) ·
+[reference/nixos.md](./skills/video/reference/nixos.md)). Create the box once
+(`pu create padam`-style); we deliberately never render locally.
 
 ## Layout
 

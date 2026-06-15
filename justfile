@@ -1,16 +1,15 @@
 # padam — prompt your agent to make videos. Run `just` to list.
+# Renders run on a pu box (NEVER locally) — see .apm/instructions/rendering.md.
 set shell := ["bash", "-uc"]
+
+HOST := "padam"
 
 default:
     @just --list
 
-# Render a video folder → videos/<name>/out.mp4
-render NAME="tutorial":
-    npx tsx src/render.ts "videos/{{NAME}}"
-
-# Render an arbitrary storyboard.json → out.mp4 beside it
-render-file STORYBOARD:
-    npx tsx src/render.ts "{{STORYBOARD}}"
+# Render a video on the pu box → videos/<name>/out.mp4 (never local)
+render NAME="tutorial" HOST=HOST:
+    bash scripts/remote-render.sh "{{NAME}}" "{{HOST}}"
 
 # Scaffold a new, minimal video folder
 new NAME:

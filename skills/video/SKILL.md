@@ -18,8 +18,11 @@ storyboard is the source of truth — never hand-edit the MP4.
    scene = `{ id, kind, durationInFrames, …fields }`. Pace at the storyboard's `fps`
    (30 default): title/outro ~90–120, prompt/bullets ~120–150, code/diff ~150.
    Set `width`/`height` for the target (16:9 `1920×1080`, 9:16 `1080×1920`, 1:1 `1080`).
-3. **Render.** `npx tsx src/render.ts videos/<name>` → `videos/<name>/out.mp4`
-   (or `just render <name>`). `$CHROMIUM_PATH` (Nix) is used if set.
+3. **Render — on the pu box, NEVER locally.** `just render <name>` syncs to the
+   pre-created pu host `padam` and renders there (Nix-resolved Chromium); the MP4 is
+   copied back to `videos/<name>/out.mp4`. Override host: `just render <name> <host>`.
+   (`src/render.ts` is what runs *on* the box — don't invoke it on this machine.)
+   See `.apm/instructions/rendering.md`.
 4. **Look.** Extract a frame per scene and *view them* — this is mandatory; never
    assume it looks right:
    ```bash
