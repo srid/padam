@@ -24,10 +24,11 @@ fi
 echo "[padam] rendering '$NAME' on pu box '$HOST'…"
 pu_sh "rm -rf ~/$REMOTE_DIR && mkdir -p ~/$REMOTE_DIR"
 # Ship the zero-inputs flake (flake.nix + nix/ + npins/ + default.nix + shell.nix),
-# the lockfile, sources, and the one video folder. node_modules/fonts/out.mp4 excluded.
+# the lockfile + pnpm-workspace.yaml (build/arch settings), sources, and the one video
+# folder. node_modules/fonts/out.mp4 excluded.
 tar czf - --exclude='node_modules' --exclude='.git' \
   --exclude='videos/*/fonts' --exclude='videos/*/out.mp4' \
-  package.json pnpm-lock.yaml .npmrc tsconfig.json \
+  package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.json \
   flake.nix default.nix shell.nix nix npins \
   src scripts "videos/$NAME" \
   | pu_sh "tar xzf - -C ~/$REMOTE_DIR"

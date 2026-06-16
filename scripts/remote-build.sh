@@ -9,16 +9,25 @@ set -euo pipefail
 NAME="${1:?usage: remote-build.sh <video-name>}"
 
 echo "node $(node --version) · pnpm $(pnpm --version) on $(hostname) ($(nproc) cores)"
+# pnpm-workspace.yaml approves esbuild's build (so this exits 0, not 1) and asks for the
+# glibc compositor via supportedArchitectures. (The package.json "pnpm" field is ignored
+# by pnpm 10+.)
 pnpm install --frozen-lockfile
 
-# The prebuilt glibc compositor can't exec on NixOS (no /lib64/ld-linux). Wrap it to
-# launch through the Nix loader — works without nix-ld; avoids patchelf PT_NOTE issues.
+# Remotion spawns the compositor binary by its REAL path inside the pnpm store (it
+# require.resolve()s @remotion/compositor-linux-x64-gnu), not via node_modules/@remotion/.
+# That prebuilt glibc binary's ELF interpreter (/lib64/ld-linux-x86-64.so.2) doesn't
+# exist on NixOS, so it dies with `spawn … ENOENT`. Locate it in the store and wrap each
+# binary to launch through the Nix loader (works without nix-ld; avoids patchelf PT_NOTE
+# issues). pnpm-workspace.yaml's supportedArchitectures is what gets it into the store.
+COMP=$(ls -d node_modules/.pnpm/@remotion+compositor-linux-x64-gnu@*/node_modules/@remotion/compositor-linux-x64-gnu 2>/dev/null | head -1)
+[ -n "$COMP" ] || { echo "FATAL: glibc compositor not in pnpm store — check supportedArchitectures in pnpm-workspace.yaml" >&2; exit 1; }
+
 GLIBC=$(nix build --no-link --print-out-paths nixpkgs#glibc.out)
 GCC=$(nix build --no-link --print-out-paths "nixpkgs#stdenv.cc.cc.lib" 2>/dev/null \
       || nix build --no-link --print-out-paths nixpkgs#gcc-unwrapped.lib)
 ZLIB=$(nix build --no-link --print-out-paths nixpkgs#zlib.out)
-COMP=node_modules/@remotion/compositor-linux-x64-gnu
-if [ -d "$COMP" ] && [ ! -e "$COMP/remotion.real" ]; then
+if [ ! -e "$COMP/remotion.real" ]; then
   LIB="$GLIBC/lib:$GCC/lib:$ZLIB/lib:$(cd "$COMP" && pwd)"
   for b in remotion ffmpeg ffprobe; do
     [ -f "$COMP/$b" ] || continue

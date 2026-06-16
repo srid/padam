@@ -1,0 +1,22 @@
+# pnpm (the render box runs 11.5.3) reads build/fetch settings from HERE, not from the
+# package.json "pnpm" field (that is ignored with a WARN). These keep the render box
+# working — scripts/remote-build.sh wipes node_modules and reinstalls on every render:
+#
+#   allowBuilds.esbuild: approve esbuild's build script so `pnpm install` exits 0
+#     instead of ERR_PNPM_IGNORED_BUILDS. Under `set -e` that non-zero exit aborts the
+#     build before it renders.
+#
+#   supportedArchitectures.libc: fetch the glibc Remotion compositor optional dep
+#     (@remotion/compositor-linux-x64-gnu, libc:[glibc]). remote-build.sh additionally
+#     hoists it into node_modules/@remotion/ if pnpm leaves it in the store, and shims
+#     it for NixOS. Without the compositor, rendering dies with `spawn … ENOENT`.
+allowBuilds:
+  esbuild: true
+supportedArchitectures:
+  os:
+    - current
+  cpu:
+    - current
+  libc:
+    - glibc
+    - current
