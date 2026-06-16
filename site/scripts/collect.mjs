@@ -1,5 +1,6 @@
 // Collect rendered videos from ../videos into the site:
 //   - copy each out.mp4 → public/videos/<name>.mp4 (served + embedded)
+//   - copy each banner.png → public/videos/<name>.png (per-video OG image)
 //   - emit src/data/videos.json (metadata from storyboard.json)
 //   - copy the logo for the header
 // A video only appears if it has BOTH storyboard.json and a rendered out.mp4.
@@ -31,10 +32,19 @@ for (const name of existsSync(videosDir) ? readdirSync(videosDir) : []) {
   if (!existsSync(sb) || !existsSync(mp4)) continue;
   const board = JSON.parse(readFileSync(sb, "utf8"));
   copyFileSync(mp4, join(pubVideos, `${name}.mp4`));
+  // Per-video Open Graph banner: when a render produced banner.png, expose it at
+  // a stable URL so a shared video link unfurls with *that* video's poster.
+  const banner = join(videosDir, name, "banner.png");
+  let bannerUrl = null;
+  if (existsSync(banner)) {
+    copyFileSync(banner, join(pubVideos, `${name}.png`));
+    bannerUrl = `videos/${name}.png`;
+  }
   const scenes = Array.isArray(board.scenes) ? board.scenes : [];
   out.push({
     name,
     title: board.title ?? name,
+    banner: bannerUrl,
     width: board.width ?? 1920,
     height: board.height ?? 1080,
     fps: board.fps ?? 30,
